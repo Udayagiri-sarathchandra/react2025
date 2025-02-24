@@ -1,4 +1,4 @@
-
+// Hoisting in javaScript
 var x=7;
 function getName(){
     console.log("namaste")
@@ -6,3 +6,10 @@ function getName(){
 getName()
 console.log(x)
 console.log(getName)
+
+
+
+
+
+
+
