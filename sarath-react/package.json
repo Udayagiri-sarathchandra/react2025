@@ -1,0 +1,23 @@
+{
+  "name": "sarath-react",
+  "version": "1.0.0",
+  "description": "react preparation",
+  "main": "App.js",
+  "scripts": {
+    "test": "jest",
+     "dev": "set PARCEL_WORKERS=0 && parcel index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Udayagiri-sarathchandra/react2025.git"
+  },
+  "author": "sarath",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Udayagiri-sarathchandra/react2025/issues"
+  },
+  "homepage": "https://github.com/Udayagiri-sarathchandra/react2025#readme",
+  "devDependencies": {
+    "parcel": "^2.8.3"
+  }
+}
