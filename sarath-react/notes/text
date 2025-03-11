@@ -1,4 +1,308 @@
-* Emmet:
-
+🔹 Emmet:
 Emmet is the essential toolkit for web-developers. It allows you
 to type shortcuts that are then expanded into full-fledged boiler plate code for writing HTML and CSS.
+Emmet is a shortcut tool for writing HTML, CSS, and JSX faster. It expands abbreviations into full code snippets, saving time. It's built into VS Code, Sublime Text, Atom, and other editors.
+
+🔹 React vs ReactDOM: What’s the Difference?
+In a React application, React and ReactDOM serve different roles:
+Library	Purpose
+react:	Core React library for components, state, hooks, and rendering logic
+react-dom:	Handles interacting with the actual DOM in web applications
+
+🔹 What is "integrity" in package-lock.json?
+The "integrity" field in package-lock.json is a security feature that ensures the package downloaded matches the expected version. It contains a cryptographic hash (SHA512 or SHA256) used to verify the integrity of the package files.
+
+🔹 Example of "integrity" in package-lock.json
+
+"dependencies": {
+  "lodash": {
+    "version": "4.17.21",
+    "resolved": "https://registry.npmjs.org/lodash/-/lodash-4.17.21.tgz",
+    "integrity": "sha512-v2kDE7I2k37X…5n6t9Q==" 
+  }
+}
+Here:
+
+"version" → The exact version of the package.
+"resolved" → The URL from where the package was downloaded.
+"integrity" → A cryptographic hash that ensures the package hasn't been altered.
+🔹 Why is "integrity" Important?
+✅ Prevents tampering → Ensures that the package is not modified after publishing.
+✅ Verifies package authenticity → Protects against man-in-the-middle (MITM) attacks.
+✅ Improves performance → npm can verify cached versions without re-downloading.
+
+🔹 When Do Integrity Issues Occur?
+If you see an error like:
+
+npm ERR! Integrity check failed
+
+Possible reasons:
+
+The package in node_modules does not match the hash in package-lock.json.
+package-lock.json is outdated or modified incorrectly.
+A corrupt or tampered package was downloaded.
+🔹 How to Fix Integrity Errors?
+Try resetting dependencies:
+rm -rf node_modules package-lock.json
+npm install
+This re-generates package-lock.json with fresh integrity hashes.
+
+If the issue persists, force clean npm's cache:
+
+npm cache clean --force
+npm install
+
+
+🔹 What are Arrow Functions (=>) in JavaScript?
+Arrow functions (=>) are a shorter and more concise way to write functions in JavaScript. They were introduced in ES6 (ECMAScript 2015) and are especially useful for callbacks, functional programming, and keeping this bound correctly.
+
+🔹 Syntax of Arrow Functions
+✅ Basic Example
+
+// Traditional function
+function add(a, b) {
+  return a + b;
+}
+
+// Arrow function (shorter syntax)
+const add = (a, b) => a + b;
+
+console.log(add(2, 3)); // Output: 5
+
+✅ Single Parameter (No Parentheses Needed)
+const square = x => x * x;
+console.log(square(4)); // Output: 16
+
+✅ No Parameters (Use () or _)
+const sayHello = () => "Hello, world!";
+console.log(sayHello()); // Output: Hello, world!
+
+🔹 Advantages of Arrow Functions
+✅ Shorter and cleaner syntax
+✅ No binding of this (uses this from surrounding scope)
+✅ Implicit return (when no {} used)
+✅ Great for callbacks & functional programming
+
+🔹 this Behavior in Arrow Functions
+One of the key differences between regular functions and arrow functions is how they handle this.
+
+🚫 Traditional Functions: this Changes
+const person = {
+  name: "Alice",
+  greet: function() {
+    setTimeout(function() {
+      console.log(`Hello, ${this.name}`);
+    }, 1000);
+  }
+};
+person.greet(); // ❌ `this.name` is undefined (or refers to the global object)
+✅ Arrow Functions: this Stays the Same
+const person = {
+  name: "Alice",
+  greet: function() {
+    setTimeout(() => {
+      console.log(`Hello, ${this.name}`);
+    }, 1000);
+  }
+};
+person.greet(); // ✅ Output: Hello, Alice
+💡 Arrow functions don’t have their own this—they inherit this from their surrounding scope.
+
+🔹 Arrow Functions in Callbacks
+Arrow functions are perfect for callbacks because they keep this and are concise.
+
+✅ Example: Array .map()
+const numbers = [1, 2, 3, 4];
+const squares = numbers.map(num => num * num);
+console.log(squares); // Output: [1, 4, 9, 16]
+
+✅ Example: Event Listeners
+document.getElementById("btn").addEventListener("click", () => {
+  console.log("Button Clicked!");
+});
+🔹 Arrow Functions with reduce, filter, find
+
+✅ Using reduce()
+const nums = [10, 20, 30];
+const sum = nums.reduce((total, num) => total + num, 0);
+console.log(sum); // Output: 60
+
+✅ Using filter()
+const evenNumbers = nums.filter(num => num % 2 === 0);
+console.log(evenNumbers); // Output: [10, 20, 30]
+
+✅ Using find()
+const users = [{ id: 1, name: "Alice" }, { id: 2, name: "Bob" }];
+const user = users.find(user => user.id === 2);
+console.log(user); // Output: { id: 2, name: "Bob" }
+🔹 When NOT to Use Arrow Functions
+🚫 As Methods in Objects (because this won't refer to the object)
+
+const person = {
+  name: "Alice",
+  greet: () => console.log(`Hello, ${this.name}`)
+};
+person.greet(); // ❌ Output: Hello, undefined
+Fix: Use a regular function.
+
+🚫 As Constructors (Arrow functions can’t be used with new)
+
+
+const Person = (name) => { this.name = name; };
+const p = new Person("Alice"); // ❌ Error: Person is not a constructor
+Fix: Use a regular function.
+
+🔹 Summary
+Feature	Traditional Function	Arrow Function
+Syntax	More verbose	Concise (=>)
+Own this?	✅ Yes	❌ No (inherits this)
+Own arguments?	✅ Yes	❌ No
+Can be used as a method?	✅ Yes	🚫 No
+Can be used as a constructor?	✅ Yes	🚫 No
+Implicit return?	❌ No	✅ Yes (if no {})
+
+📌 1. What is NPM?
+NPM (Node Package Manager) is a package manager for JavaScript.
+It helps install, update, and manage dependencies (libraries, tools).
+Example:
+sh
+Copy
+Edit
+npm install react
+It also allows running scripts like:
+sh
+Copy
+Edit
+npm run build
+📌 2. What is Parcel/Webpack? Why do we need it?
+📦 Parcel & Webpack are Bundlers
+They bundle JavaScript, CSS, images, and assets into a single optimized file for production.
+Helps with performance, code splitting, and optimizations.
+📌 Why do we need bundlers?
+Modular Code: They combine multiple files into a single efficient bundle.
+Performance Boost: They minify and optimize assets.
+Compatibility: They transpile modern JS (ES6+) into browser-compatible code.
+Parcel (Zero-config, faster) vs. Webpack (Highly configurable but slower).
+
+📌 3. What is .parcel-cache?
+A folder used by Parcel to store cached data for faster builds.
+If you delete .parcel-cache, Parcel recompiles everything from scratch, which is slower.
+📌 4. What is npx?
+npx (Node Package eXecute) runs npm packages without installing them globally.
+Example:
+sh
+Copy
+Edit
+npx create-react-app my-app
+npx downloads & runs create-react-app temporarily.
+📌 5. What is the difference between dependencies vs devDependencies?
+dependencies → Needed at runtime (React, Redux, Axios).
+devDependencies → Needed only for development (Babel, ESLint, Parcel).
+📌 Example in package.json:
+
+json
+Copy
+Edit
+"dependencies": {
+  "react": "^18.0.0"
+},
+"devDependencies": {
+  "parcel": "^2.8.0"
+}
+📌 6. What is Tree Shaking?
+Tree shaking removes unused JavaScript from the final bundle to reduce size.
+Parcel/Webpack automatically does this.
+📌 Example:
+
+js
+Copy
+Edit
+import { usedFunction } from "library";
+If unusedFunction exists in the library but isn't used, it won't be included in the bundle.
+📌 7. What is Hot Module Replacement (HMR)?
+HMR updates code in the browser without refreshing the page.
+Useful for fast development (Retains state).
+Parcel, Webpack, and Vite support HMR.
+📌 Example:
+
+Changing CSS updates instantly without reloading the page.
+📌 8. Favourite 5 Superpowers of Parcel
+🔥 Zero Configuration – No need for a config file like Webpack!
+🚀 Faster Builds – Uses caching and parallel processing.
+📦 Tree Shaking – Removes unused code automatically.
+🛠️ HMR (Hot Module Replacement) – Updates changes instantly.
+🔀 Code Splitting – Loads only necessary parts of code dynamically.
+✅ Explaining 3 in Detail:
+
+Zero Configuration: No need for Webpack-style setup; Parcel just works.
+Tree Shaking: It removes unused imports, making the final bundle smaller.
+HMR: No need to refresh the page manually; it updates in real-time.
+📌 9. What is .gitignore? What should we add and not add?
+.gitignore tells Git which files NOT to track.
+Common files to ignore:
+bash
+Copy
+Edit
+node_modules/
+.env
+dist/
+.parcel-cache/
+Don’t ignore source code, configs, and documentation!
+📌 10. What is the difference between package.json and package-lock.json?
+Feature	package.json	package-lock.json
+Purpose	Stores project dependencies	Locks exact versions
+Editable	Yes (manually)	No (auto-generated)
+Versioning	Uses ^ (caret) & ~ (tilde)	Exact versions
+Included in Git?	✅ Yes	✅ Yes
+📌 11. Why should I not modify package-lock.json?
+It ensures consistent dependency versions across different systems.
+Manually editing it can break installs.
+Always let npm update it automatically.
+📌 12. What is node_modules? Is it a good idea to push it on Git?
+node_modules is where all installed dependencies are stored.
+❌ No, do NOT push node_modules to Git because:
+It's too large.
+Anyone can install it using package.json (npm install).
+📌 13. What is the dist folder?
+Contains production-ready, optimized files after running npm run build.
+Used for deployment (Live websites).
+📌 14. What is browserslist?
+Defines which browsers your app should support.
+Found in package.json:
+json
+Copy
+Edit
+"browserslist": [
+  ">0.2%",
+  "not dead",
+  "not op_mini all"
+]
+Helps Parcel/Webpack optimize output.
+📌 15. Read about different bundlers: Vite, Webpack, Parcel
+Feature	Vite	Webpack	Parcel
+Config Needed?	❌ No	✅ Yes	❌ No
+Speed	🚀 Fastest	🐢 Slow	🚀 Fast
+HMR	✅ Excellent	✅ Good	✅ Good
+Code Splitting	✅ Yes	✅ Yes	✅ Yes
+Vite → Uses esbuild, super fast.
+Webpack → More flexible, but complex.
+Parcel → Best for zero-config, quick setup.
+📌 16. Read about ^ (caret) and ~ (tilde) in package.json
+Symbol	Example	Meaning
+^ (caret)	"react": "^18.0.0"	Allows minor updates (e.g., 18.1.0 but not 19.0.0)
+~ (tilde)	"react": "~18.0.0"	Allows patch updates (e.g., 18.0.1 but not 18.1.0)
+📌 17. Read about <script> types in HTML (MDN Docs)
+Script Type	Example	Purpose
+Default (<script>)	<script src="app.js"></script>	Runs immediately
+async	<script async src="app.js"></script>	Loads in parallel, runs when ready
+defer	<script defer src="app.js"></script>	Loads in parallel, runs after HTML is parsed
+module	<script type="module" src="app.js"></script>	Supports ES6 modules
+📌 Best practice: Use defer for scripts that interact with the DOM.
+
+🚀 Summary
+✅ Bundlers like Parcel/Webpack optimize JS & assets
+✅ Tree Shaking removes unused code
+✅ HMR makes dev faster
+✅ Never push node_modules to Git
+✅ package-lock.json should NOT be modified manually
+✅ Use browserslist to optimize for specific browsers
